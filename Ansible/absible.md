@@ -17,6 +17,8 @@ ansible是基于Python开发的自动化运维工具，可以实现批量系统�
 * Custom Modules：自定义模块。
 * Connection Plugins：连接插件，用于与被管控主机之间基于SSH建立连接关系。
 * Plugins：其他插件，包括记录日志等。
+## ansible工作流程
+使用者使用Ansible或Ansible-playbooks时，在服务器终端输入Ansible的Ad-Hoc命令集或palybook后，Ansible会遵循预先编排的规则将Playbooks逐条拆解为Play，再将paly组织成Ansible可识别的任务（Task），随后调用任务涉及的所有模块（modules）和插件（plugins），根据Inventory中定义的主机列表通过SSH将任务集以临时文件或命令的形式传输到远程客户端执行并返回执行结果，如果是临时文件，则执行完毕后自动删除。
 ## ansible安装
 1. 启用yum仓库
 ```bash
@@ -47,8 +49,11 @@ ansible --version
 ```bash
 vim /etc/ansible/hosts 
 #末尾添加如下内容：
-[web]
+[web]   
 192.168.33.236   ansible_ssh_user=root ansible_ssh_pass=password 
+192.168.33.237   ansible_ssh_user=root ansible_ssh_pass=password 
+192.168.33.238   ansible_ssh_user=root ansible_ssh_pass=password 
+...
 #测试连通性 （-i /etc/ansible/hosts可以省略）这里用到了ping模块：
 ansible -i /etc/ansible/hosts web-servers -m ping
 ```
@@ -60,6 +65,14 @@ ssh-keygen
 ssh-copy-id root@192.168.33.236
 #测试
 ssh root@192.168.33.236 或 ansible web -m ping
+
+vim /etc/ansible/hosts 
+#末尾添加如下内容：
+[web]   
+192.168.33.236    
+192.168.33.237    
+192.168.33.238   
+...
 ```
 ### command模块
 作用：在远程节点上执行一个命令（默认模块可以忽略-m command）
@@ -115,7 +128,6 @@ ansible web -m file -a "path=/root/hosts mode=0755"
 ```bash
 #执行脚本
 cat test.sh
-
 #!/bin/bash
 echo 我是测试脚本
 
