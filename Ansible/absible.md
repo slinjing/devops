@@ -1,6 +1,6 @@
 # ansible
 ## ansible简介
-- ansible是基于Python开发的自动化运维工具，可以实现批量系统配置、批量程序部署、批量运行命令等功能。ansible是基于模块工作的，本身没有批量部署的能力。真正具有批量部署的是ansible所运行的模块。
+ansible是基于Python开发的自动化运维工具，可以实现批量系统配置、批量程序部署、批量运行命令等功能。ansible是基于模块工作的，本身没有批量部署的能力。真正具有批量部署的是ansible所运行的模块。
 ## absible特点
 1. 部署简单，无需客户端，只要在主控端部署ansible环境即可。
 2. 通过调用特定的模块完成特定任务。
@@ -45,21 +45,21 @@ ansible --version
 ## ansible使用
 ### 基于用户、密码定义hosts
 ```bash
-- vim /etc/ansible/hosts 
-- 末尾添加如下内容：
-- [web]
-- 192.168.33.236   ansible_ssh_user=root ansible_ssh_pass=password 
-- 测试连通性 （-i /etc/ansible/hosts可以省略）这里用到了ping模块：
-- ansible -i /etc/ansible/hosts web-servers -m ping
+vim /etc/ansible/hosts 
+#末尾添加如下内容：
+[web]
+192.168.33.236   ansible_ssh_user=root ansible_ssh_pass=password 
+#测试连通性 （-i /etc/ansible/hosts可以省略）这里用到了ping模块：
+ansible -i /etc/ansible/hosts web-servers -m ping
 ```
 ### 基于ssh密钥来访问定义hosts
 ```bash
-- 设置密钥
-- ssh-keygen
-- 拷贝密钥
-- ssh-copy-id root@192.168.33.236
-- 测试
-- ssh root@192.168.33.236 或 ansible web -m ping
+#设置密钥
+ssh-keygen
+#拷贝密钥
+ssh-copy-id root@192.168.33.236
+#测试
+ssh root@192.168.33.236 或 ansible web -m ping
 ```
 ### command模块
 作用：在远程节点上执行一个命令（默认模块可以忽略-m command）
@@ -72,12 +72,18 @@ ansible --version
 使用 command 模块时，不得出现shell变量$name，也不得使用特殊符号 > < | ; & 等，如果需要使用前面的特殊符号则可以使用 shell 模块来实现。
 ### 示例
 ```bash
-ansible web -m command -a "df -h"      #查看远程节点磁盘情况
-ansible web -m command -a "uptime"     #查看远程节点负载信息
-ansible web -m command -a "pwd chdir=/etc"     #先切换到/etc目录下，然后打印出当前的目录信息（chdir参数）
-ansible web -m command -a "pwd creates=/hello" #判断/hello文件是否存在，存在则不执行前面的 pwd 命令,存在则执行 pwd 命令（creates参数）
-ansible web -m command -a "cat ./test.txt removes=./test.txt"  #判断./test.txt文件是否存在,存在则删除，不存在则执行（removes参数）
-ansible web -m command -a "chmod u+x /root/passwd warn=false"  #不提供告警信息（warn参数）
+#查看远程节点磁盘情况
+ansible web -m command -a "df -h"   
+#查看远程节点负载信息  
+ansible web -m command -a "uptime"    
+#先切换到/etc目录下，然后打印出当前的目录信息（chdir参数）
+ansible web -m command -a "pwd chdir=/etc"   
+#判断/hello文件是否存在，存在则不执行前面的 pwd 命令,存在则执行 pwd 命令（creates参数）
+ansible web -m command -a "pwd creates=/hello" 
+#判断./test.txt文件是否存在,存在则删除，不存在则执行（removes参数）
+ansible web -m command -a "cat ./test.txt removes=./test.txt"  
+#不提供告警信息（warn参数）
+ansible web -m command -a "chmod u+x /root/passwd warn=false"  
 ```
 
 
