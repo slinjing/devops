@@ -1,22 +1,22 @@
 # ansible
 ## ansible简介
-ansible是基于Python开发的自动化运维工具，集合了众多运维工具（puppet、cfengine、chef、func、fabric）的优点，可以实现批量系统配置、批量程序部署、批量运行命令等功能。ansible是基于模块工作的，本身没有批量部署的能力。真正具有批量部署的是ansible所运行的模块。
+- ansible是基于Python开发的自动化运维工具，集合了众多运维工具（puppet、cfengine、chef、func、fabric）的优点，可以实现批量系统配置、批量程序部署、批量运行命令等功能。ansible是基于模块工作的，本身没有批量部署的能力。真正具有批量部署的是ansible所运行的模块。
 ## absible特点
-1.部署简单，无需客户端，只要在主控端部署ansible环境即可。
-2.通过调用特定的模块完成特定任务。
-3.默认使用SSH协议对设备进行管理。
-4.可扩展性强，支持API及自定义模块，可通过Python轻松扩展。
-5.通过Playbooks来定制强大的配置、实现自动化管理。
-6.对云计算平台、大数据都有很好的支持。
-7.具有幂等性：一个操作在一个主机上执行一遍和执行N遍的结果是一样的。
+1. 部署简单，无需客户端，只要在主控端部署ansible环境即可。
+2. 通过调用特定的模块完成特定任务。
+3. 默认使用SSH协议对设备进行管理。
+4. 可扩展性强，支持API及自定义模块，可通过Python轻松扩展。
+5. 通过Playbooks来定制强大的配置、实现自动化管理。
+6. 对云计算平台、大数据都有很好的支持。
+7. 具有幂等性：一个操作在一个主机上执行一遍和执行N遍的结果是一样的。
 ## ansible组成
-Ansible：ansible的核心模块。
-Host Inventory：主机清单，也就是被管理的主机列表。
-Playbooks：ansible的剧本，可想象为将多个任务放置在一起，一块执行。
-Core Modules：ansible的核心模块。
-Custom Modules：自定义模块。
-Connection Plugins：连接插件，用于与被管控主机之间基于SSH建立连接关系。
-Plugins：其他插件，包括记录日志等。
+* Ansible：ansible的核心模块。
+* Host Inventory：主机清单，也就是被管理的主机列表。
+* Playbooks：ansible的剧本，可想象为将多个任务放置在一起，一块执行。
+* Core Modules：ansible的核心模块。
+* Custom Modules：自定义模块。
+* Connection Plugins：连接插件，用于与被管控主机之间基于SSH建立连接关系。
+* Plugins：其他插件，包括记录日志等。
 ## ansible安装
 1. 启用yum仓库
 yum install epel-release -y
@@ -38,21 +38,19 @@ ansible --version
 可以使用ansible-doc -l列出所有模块，使用ansible-doc -s查看指定模块。
 ## ansible使用
 ### 基于用户、密码定义hosts
-vim /etc/ansible/hosts 
-末尾添加如下内容：
-[web]
-192.168.33.236   ansible_ssh_user=root ansible_ssh_pass=password 
-
-测试连通性 （-i /etc/ansible/hosts可以省略）这里用到了ping模块：
-ansible -i /etc/ansible/hosts web-servers -m ping
-
+- vim /etc/ansible/hosts 
+- 末尾添加如下内容：
+- [web]
+- 192.168.33.236   ansible_ssh_user=root ansible_ssh_pass=password 
+- 测试连通性 （-i /etc/ansible/hosts可以省略）这里用到了ping模块：
+- ansible -i /etc/ansible/hosts web-servers -m ping
 ### 基于ssh密钥来访问定义hosts
-设置密钥
-ssh-keygen
-拷贝密钥
-ssh-copy-id root@192.168.33.236
-测试
-ssh root@192.168.33.236 或 ansible web -m ping
+- 设置密钥
+- ssh-keygen
+- 拷贝密钥
+- ssh-copy-id root@192.168.33.236
+- 测试
+- ssh root@192.168.33.236 或 ansible web -m ping
 ### command模块
 作用：在远程节点上执行一个命令（默认模块可以忽略-m command）
 * 参数	                       说明
