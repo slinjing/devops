@@ -85,6 +85,43 @@ ansible web -m command -a "cat ./test.txt removes=./test.txt"
 #不提供告警信息（warn参数）
 ansible web -m command -a "chmod u+x /root/passwd warn=false"  
 ```
+### shell模块
+作用：能够在终端输入的各种命令，默认是通过/bin/sh来执行。
+### 示例
+```bash
+#查看/root/a.txt文件并筛选处包含hello的行
+ansible web -m shell -a "cat /root/a.txt | grep hello"
+#查看上次命令是否执行成功
+ansible web -m shell -a "echo $?"
+#判断hello是否存在，如果不存在就创建一个hello目录，并且echo helloworld写入hello/hello.sh
+ansible web -m shell -a "mkdir hello;echo 'helloworld' >hello/hello.sh; creates=hello"
+```
+### copy模块
+作用：实现主控端向目标主机拷贝文件，可以结合shell模块将本地脚本拷贝到远程主机再执行，但是不方便，执行脚本的时候直接用scripts模块。
+### 示例
+```bash
+#把ansible主机的/etc/hosts 拷贝到主机组机器中的/root/下
+ansible web -m copy -a "src=/etc/ansible/hosts dest=/root "
+```
+### file模块
+作用：给文件设置权限。
+### 示例
+```bash
+#给/root/hosts文件可执行权限
+ansible web -m file -a "path=/root/hosts mode=0755"
+```
+### scripts模块
+作用：可以在远程服务器上执行本地的脚本。
+```bash
+#执行脚本
+cat test.sh
+
+#!/bin/bash
+echo 我是测试脚本
+
+ansible centos -m script -a "test.sh"
+```
+
 
 
 
