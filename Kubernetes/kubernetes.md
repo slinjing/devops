@@ -2,7 +2,7 @@ k8s部署记录
 最低要求：至少2台2核4G的服务器，系统环境CentOS7.6/7.7/7.8
 环境准备：
 master节点：192.168.32.146
-worker节点：192.168.32.146  
+worker节点：192.168.33.236 
 
 安装后的软件版本为：
 Kubernetes v1.19.x
@@ -156,6 +156,9 @@ spec:
         image: mysql:latest
         ports:
         - containerPort: 3306
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: "123456Aa"
 ---
 apiVersion: v1
 kind: Service
