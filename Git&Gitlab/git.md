@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ### 创建远程仓库 在github 或gitee 上创建仓库
 ### 初始化本地仓库 从远程仓库colne 到本地
 ###    设置用户名和邮箱地址
@@ -51,3 +52,13 @@ hint: See the 'Note about fast-forwards' in 'git push --help' for details.
 
 git pull --rebase origin main
 git push --set-upstream origin main
+=======
+or create a new repository on the command line
+echo "# python1" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/slinjing/python1.git
+git push -u origin main
+>>>>>>> c25d410f207978946d27a08ecf465190581de676
